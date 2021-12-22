@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/hakunamoni/Kickstart-SmartContract/issues"
   },
-  "homepage": "https://github.com/hakunamoni/Kickstart-SmartContract#readme"
+  "homepage": "https://github.com/hakunamoni/Kickstart-SmartContract#readme",
+  "dependencies": {
+    "ganache-cli": "^6.12.2",
+    "mocha": "^9.1.3",
+    "solc": "^0.4.26",
+    "web3": "^1.6.1"
+  }
 }
