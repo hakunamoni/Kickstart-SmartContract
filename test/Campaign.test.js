@@ -13,7 +13,6 @@ let campaign;
 
 beforeEach(async () => {
     accounts = await web3.eth.getAccounts();
-    // "accounts" include 10 different account provided by ganache
 
     factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
         .deploy({ data: compiledFactory.bytecode })
@@ -50,5 +49,17 @@ describe('Campaigns', () => {
         });
         const isContributor = await campaign.methods.approvers(accounts[1]).call();
         assert(isContributor);
+    });
+
+    it('requires a minimum contribution', async() => {
+        try {
+            await campaign.methods.contribute().send({
+                value: '5',
+                from: accounts[1]
+            });
+            assert(false);
+        } catch (err) {
+            assert(err);
+        }
     });
 });
