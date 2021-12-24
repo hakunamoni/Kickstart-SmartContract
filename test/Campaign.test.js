@@ -14,9 +14,25 @@ let campaign;
 beforeEach(async () => {
     accounts = await web3.eth.getAccounts();
 
+    // for new version of deploy
     factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
         .deploy({ data: compiledFactory.bytecode })
         .send({ from: accounts[0], gas: '1000000' });
 
+    await factory.methods.createCampaign('100').send({
+        from: accounts[0],
+        gas: '1000000'
+    });
     
+    // const addresses = await factory.methods.getDeployedCampaigns().call();
+    // campaignAddress = addresses[0];
+    // same as below
+    [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
+    // take the 1st element of array to the variable
+
+    // for already version of deploy
+    campaign = await new web3.eth.Contract(
+        JSON.parse(compiledCampaign.interface),
+        campaignAddress
+    );
 });
